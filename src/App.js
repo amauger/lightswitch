@@ -5,9 +5,11 @@ import './App.css';
 import Button from 'react-bootstrap/Button';
 
  class App extends React.Component {
-  async function onClick() {
-  // Default options are marked with *
-  const response = await fetch('http://localhost:3000/assistant', {
+  constructor(props){
+    super(props);
+    this.state = {
+      onClick: async () => {
+        const response = await fetch('http://localhost:3000/assistant',{
     method: 'POST', // *GET, POST, PUT, DELETE, etc.
     mode: 'cors', // no-cors, *cors, same-origin
     cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
@@ -22,15 +24,17 @@ import Button from 'react-bootstrap/Button';
     "command": "toggle the main light",
     "converse": false,
     "user": "Angus"
-}) // body data type must match "Content-Type" header
-  });
-  console.log(response);
-  return response.json(); // parses JSON response into native JavaScript objects
-}
+})
+  })
+        console.log(response);
+        return response;
+      }
+    }
+  }
   render() {
       return (
     <div className="App">
-      <Button onClick={this.onClick}> Toggle Lights </Button>
+      <Button onClick={this.state.onClick}> Toggle Lights </Button>
     </div>
   );
   }
